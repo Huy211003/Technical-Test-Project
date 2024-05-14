@@ -1,0 +1,86 @@
+.location-tree {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.location-search {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.location-search input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 5px;
+    color: #75787d;
+    background-color: white;
+}
+
+.location-search svg {
+    margin-right: 8px;
+    font-size: 1.3em;
+    color: #75787d;
+}
+
+.search-box {
+    width: 100%;
+    background-color: white;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin: 5px 0;
+    padding-left: 10px;
+    position: relative;
+    white-space: nowrap;
+}
+
+li .tree-item-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    line-height: 1.5;
+    color: #75787d;
+}
+
+li .tree-item-header svg {
+    margin-right: 5px;
+    font-size: 1.2em;
+    flex-shrink: 0;
+    color: #ccc;
+}
+
+.tree-item {
+    margin: 5px 0;
+    padding-left: 10px;
+    position: relative;
+    white-space: nowrap;
+}
+
+.tree-children {
+    padding-left: 20px;
+    border-left: 1px solid #ccc;
+}
+
+li .tree-item-header .icon {
+    font-size: 1.2em;
+    color: #ccc;
+}
+
+li .tree-item-header:hover {
+    color: #0b66c3;
+}
+
+li .tree-item-header:hover svg {
+    color: #0b66c3;
+}
