@@ -1,19 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import LocationTree from './components/LocationTree'
+import { useState } from 'react';
+import './App.css';
+import LocationModal from './components/LocationModal';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <div className="App">
-      <div className="container">
-        <LocationTree />
-      </div>
+      <button onClick={openModal} className="open-modal-button">Open Location Tree</button>
+      <LocationModal isOpen={modalIsOpen} onRequestClose={closeModal} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
