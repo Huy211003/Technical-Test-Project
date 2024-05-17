@@ -7,6 +7,7 @@ const LocationTree = () => {
   const [locations, setLocations] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [expanded, setExpanded] = useState({});
+  const [draggedItem, setDraggedItem] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -43,9 +44,51 @@ const LocationTree = () => {
     return nodes.filter(node => node.name.toLowerCase().includes(term.toLowerCase()));
   };
 
+  const onDragStart = (event, item) => {
+    setDraggedItem(item);
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
+  const onDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const onDrop = (event, targetArea) => {
+    event.preventDefault();
+    if (draggedItem && targetArea.is_area) {
+      const sourceArea = findParent(locations, draggedItem.id);
+      if (sourceArea && sourceArea.id !== targetArea.id) {
+        sourceArea.children = sourceArea.children.filter(child => child.id !== draggedItem.id);
+        targetArea.children = [...targetArea.children, draggedItem];
+        setLocations([...locations]);
+      }
+    }
+    setDraggedItem(null);
+  };
+
+  const findParent = (nodes, id) => {
+    for (let node of nodes) {
+      if (node.children.some(child => child.id === id)) {
+        return node;
+      }
+      if (node.children.length > 0) {
+        const foundParent = findParent(node.children, id);
+        if (foundParent) return foundParent;
+      }
+    }
+    return null;
+  };
+
   const renderNode = (node) => (
     <li key={node.id} className="tree-item">
-      <div className="tree-item-header" onClick={() => toggleExpand(node.id)}>
+      <div
+        className="tree-item-header"
+        draggable={!node.is_area}
+        onDragStart={(event) => onDragStart(event, node)}
+        onDragOver={onDragOver}
+        onDrop={(event) => onDrop(event, node)}
+        onClick={() => toggleExpand(node.id)}
+      >
         {node.children.length > 0 && (
           expanded[node.id] ? <IoMdArrowDropdown className="icon" /> : <IoMdArrowDropright className="icon" />
         )}
